@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECHO-API", "ECHO-API.csproj", "{1018D092-4994-4A45-AA7A-5D8DECE7AE52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1018D092-4994-4A45-AA7A-5D8DECE7AE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1018D092-4994-4A45-AA7A-5D8DECE7AE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1018D092-4994-4A45-AA7A-5D8DECE7AE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1018D092-4994-4A45-AA7A-5D8DECE7AE52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75EF8DE3-BE69-4E4D-91D9-D52A4CA629B2}
+	EndGlobalSection
+EndGlobal
