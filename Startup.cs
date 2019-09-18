@@ -2,10 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using ECHO_API.Domain.Repositories;
+using ECHO_API.Domain.Repositories.PacientesRepository;
+using ECHO_API.Domain.Services.PacientesService;
+using ECHO_API.Persistence.Context;
+using ECHO_API.Persistence.Repositories;
+using ECHO_API.Persistence.Repositories.PacientesRepository;
+using ECHO_API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +36,28 @@ namespace ECHO_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            var ConnectionString = Configuration.GetConnectionString("BdConnection"); // getting the string connection from appsettings 
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(ConnectionString).EnableSensitiveDataLogging(true)
+            );
+
+            // Space for services and repos
+
+            services.AddScoped<IPacienteRepository, PacientesRepository>();
+            services.AddScoped<IPacientesService, PacientesService>(); 
+
+
+            
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = ContextCacheKey => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
