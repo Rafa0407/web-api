@@ -10,6 +10,7 @@ namespace ECHO_API.Domain.Repositories.InternamientosRepository
     {
         // CRUD METHOD DECLARATION
         Task<IEnumerable<Internamientos>> ListAsync();
+
         //Task AddAsync(Pacientes pacientes);
 
         Task<Internamientos> FindByIdAsync(int id);

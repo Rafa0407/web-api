@@ -25,24 +25,38 @@ namespace ECHO_API.Services
         {
             return await _internamientosRepository.ListAsync();
         }
-        public async Task<InternamientosResponse> FindByIdAsync(int id)
+        public async Task<Internamientos> FindByIdAsync(int id)
         {
+            await _unitOfWork.CompleteAsync();
+            var internamiento = await _internamientosRepository.FindByIdAsync(id);
+            return internamiento;
+        }
+
+
+        public async Task<InternamientosResponse> UpdateAsync(Internamientos internamiento)
+        {
+            var existingInternamiento = await _internamientosRepository.FindByIdAsync(internamiento.IdInternamiento);
+
+            if(existingInternamiento == null)
+                return new InternamientosResponse("Internamiento not found");
+
+            if (existingInternamiento.EstadoInternamiento == false)
+                return new InternamientosResponse("El internamiento ya está inactivo"); 
+
+            existingInternamiento.EstadoInternamiento = internamiento.EstadoInternamiento; 
+
             try
             {
+                _internamientosRepository.Update(existingInternamiento);
                 await _unitOfWork.CompleteAsync();
-                var internamiento = await _internamientosRepository.FindByIdAsync(id);
-                return new InternamientosResponse(internamiento);
+
+                return new InternamientosResponse(existingInternamiento);
             }
             catch (Exception ex)
             {
-                return new InternamientosResponse($"Internamiento not found. {ex}");
+                return new InternamientosResponse($"An error ocurred: {ex.Message}");
             }
 
-        }
-
-        public void Update(Internamientos internamiento)
-        {
-            throw new NotImplementedException();
         }
     }
 }

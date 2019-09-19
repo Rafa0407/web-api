@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ECHO_API.Domain.Models;
+using ECHO_API.Resources.InternamientosResource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace ECHO_API.Mapping
         // for all the resourcesToModelProfile
         public ResourceToModelProfile()
         {
-            //CreateMap<SaveCategoryResource, Category>(); e.j
+            CreateMap<SaveInternamientosResource, Internamientos>();
         }
     }
 }

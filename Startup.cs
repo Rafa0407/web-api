@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ECHO_API.Domain.Repositories;
+using ECHO_API.Domain.Repositories.InternamientosRepository;
 using ECHO_API.Domain.Repositories.PacientesRepository;
+using ECHO_API.Domain.Services.InternamientosService;
 using ECHO_API.Domain.Services.PacientesService;
 using ECHO_API.Persistence.Context;
 using ECHO_API.Persistence.Repositories;
+using ECHO_API.Persistence.Repositories.InternamientosRepository;
 using ECHO_API.Persistence.Repositories.PacientesRepository;
 using ECHO_API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -45,8 +48,11 @@ namespace ECHO_API
             // Space for services and repos
 
             services.AddScoped<IPacienteRepository, PacientesRepository>();
-            services.AddScoped<IPacientesService, PacientesService>(); 
+            services.AddScoped<IPacientesService, PacientesService>();
 
+            services.AddScoped<IInternamientosRepository, InternamientosRepository>();
+            services.AddScoped<IInternamientosService, InternamientosService>();
+            
 
             
             services.AddAutoMapper(typeof(Startup).Assembly);

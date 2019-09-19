@@ -13,10 +13,10 @@ namespace ECHO_API.Domain.Services.InternamientosService
         Task<IEnumerable<Internamientos>> ListAsync();
         //Task AddAsync(Pacientes pacientes);
 
-        Task<InternamientosResponse> FindByIdAsync(int id);
+        Task<Internamientos> FindByIdAsync(int id);
 
-        void Update(Internamientos internamiento);
+        Task<InternamientosResponse> UpdateAsync(Internamientos internamiento);
 
-        //void Remove(Internamientos internamiento);
+        //Task>InternamientosResponse> RemoveAsync(Internamientos internamiento);
     }
 }

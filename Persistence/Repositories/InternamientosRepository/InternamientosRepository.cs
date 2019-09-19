@@ -17,16 +17,21 @@ namespace ECHO_API.Persistence.Repositories.InternamientosRepository
 
         public async Task<IEnumerable<Internamientos>> ListAsync()
         {
-            return await _context.Internamientos.ToListAsync();
+            return await _context.Internamientos .Where(p =>  p.EstadoInternamiento == true) // solo los internamientos activos
+                                                 .Include(i => i.CreadoPorNavigation)
+                                                 .Include(i => i.MedicoEncargadoNavigation)
+                                                 .Include(i => i.PacienteInternamientoNavigation)
+                                                 .ToListAsync();
         }
 
         public async Task<Internamientos> FindByIdAsync(int id)
         {
 
-            var internamiento = _context.Internamientos.Where(p => p.IdInternamiento == id)
-                                              //.Include(p => p.DatosPadresNavigation)
-                                              .SingleOrDefaultAsync();
-            return await internamiento;
+            return await _context.Internamientos.Where(p => p.IdInternamiento == id && p.EstadoInternamiento == true)
+                                                .Include(i => i.CreadoPorNavigation)
+                                                .Include(i => i.MedicoEncargadoNavigation)
+                                                .Include(i => i.PacienteInternamientoNavigation)
+                                                .FirstOrDefaultAsync(); 
         }
 
         /*public async Task AddAsync(Pacientes pacientes)
