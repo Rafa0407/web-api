@@ -15,7 +15,7 @@ namespace ECHO_API.Persistence.Context
        That parameters can be changed, according with your database config
        This command runs with PMC 
 
-       Scaffold-DbContext "Server=RAFA-SEQUEIRA;Database=bd;Trusted_Connection=True;" -Force Microsoft.EntityFrameworkCore.SqlServer -ContextDir Persistence/Contexts -OutputDir Domain/Models -Tables AccesosAgenda, AcompannantePaciente, Admision, AgendaConvenioDetalle, AgendaConvenios, AgendaMedicos, Alergias, AlergiasPaciente, Cantones, CasoConsulta, CategoriaExamenes, ConsultaMedica, ControlNotas, ControlSignos, CosentimientoInformado, DatosPadres, Distritos, EmpresaConvenios, EntidadJuridica, Especialidades, EstadoCivil, ExamenFisico, FacturasDetalles, FacturasEncabezado, HistoriaClinica, HistorialMedico, Internamientos, MedicoEspecialidad, Medicos, MotivosConsulta, MotivosConsultaAgenda, MotivosConsultaEspecialidad, Nacionalidades, NotaOperatoria, NotasEnfermeria, NotasEvolucion, Ocupaciones, Pacientes, Perfil_Detalle_Acceso_Agenda, PersonalInternamiento, PlanCitas, PlanesEvolucion, Provincias, RecetasMedicas, SolicitudExamenes, TipoAlergias, TipoIdentificacion, TiposExamenes, TomaSignos, Usuarios
+       Scaffold-DbContext "Server=RAFA-SEQUEIRA;Database=bd;Trusted_Connection=True;" -Force Microsoft.EntityFrameworkCore.SqlServer -ContextDir Persistence/Contexts -OutputDir Domain/Models -Tables AccesosAgenda, AcompannantePaciente, Admision, AgendaConvenioDetalle, AgendaConvenios, AgendaMedicos, Alergias, AlergiasPaciente, Cantones, CasoConsulta, CategoriaExamenes, ConsultaMedica, ControlNotas, ControlSignos, CosentimientoInformado, DatosPadres, Distritos, EmpresaConvenios, EntidadJuridica, Especialidades, EstadoCivil, ExamenFisico, FacturasDetalles, FacturasEncabezado, HistoriaClinica, HistorialMedico, Internamientos, MedicoEspecialidad, Medicos, MotivosConsulta, MotivosConsultaAgenda, MotivosConsultaEspecialidad, Nacionalidades, NotaOperatoria, NotasEnfermeria, NotasEvolucion, Ocupaciones, Pacientes, Perfil_Detalle_Acceso_Agenda, PersonalInternamiento, PlanCitas, PlanesEvolucion, Provincias, RecetasMedicas, SolicitudExamenes, TipoAlergias, TipoIdentificacion, TiposExamenes, TomaSignos, Usuarios, FuncionPersonalInternamiento
        */
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -44,6 +44,7 @@ namespace ECHO_API.Persistence.Context
         public virtual DbSet<ExamenFisico> ExamenFisico { get; set; }
         public virtual DbSet<FacturasDetalles> FacturasDetalles { get; set; }
         public virtual DbSet<FacturasEncabezado> FacturasEncabezado { get; set; }
+        public virtual DbSet<FuncionPersonalInternamiento> FuncionPersonalInternamiento { get; set; }
         public virtual DbSet<HistoriaClinica> HistoriaClinica { get; set; }
         public virtual DbSet<HistorialMedico> HistorialMedico { get; set; }
         public virtual DbSet<Internamientos> Internamientos { get; set; }
@@ -104,6 +105,8 @@ namespace ECHO_API.Persistence.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IdAdmision).HasColumnName("idAdmision");
+
                 entity.Property(e => e.NombreAcompañante)
                     .HasColumnName("nombreAcompañante")
                     .HasMaxLength(50)
@@ -113,13 +116,18 @@ namespace ECHO_API.Persistence.Context
                     .HasColumnName("telefono")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.IdAdmisionNavigation)
+                    .WithMany(p => p.AcompannantePaciente)
+                    .HasForeignKey(d => d.IdAdmision)
+                    .HasConstraintName("FK_AcompannantePaciente_Admision");
             });
 
             modelBuilder.Entity<Admision>(entity =>
             {
-                entity.HasKey(e => e.IdIadmision);
+                entity.HasKey(e => e.IdAdmision);
 
-                entity.Property(e => e.IdIadmision).HasColumnName("idIAdmision");
+                entity.Property(e => e.IdAdmision).HasColumnName("idIAdmision");
 
                 entity.Property(e => e.CreadoPor).HasColumnName("creadoPor");
 
@@ -137,6 +145,10 @@ namespace ECHO_API.Persistence.Context
                     .HasColumnName("fechaAdmision")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.FechaEgreso)
+                    .HasColumnName("fechaEgreso")
+                    .HasColumnType("datetime");
+
                 entity.Property(e => e.FechaIngreso)
                     .HasColumnName("fechaIngreso")
                     .HasColumnType("datetime");
@@ -145,12 +157,8 @@ namespace ECHO_API.Persistence.Context
 
                 entity.Property(e => e.ProcedimientosRealizados)
                     .HasColumnName("procedimientosRealizados")
-                    .HasMaxLength(10);
-
-                entity.HasOne(d => d.AcompannantesNavigation)
-                    .WithMany(p => p.Admision)
-                    .HasForeignKey(d => d.Acompannantes)
-                    .HasConstraintName("FK_Admision_AcompannantePaciente");
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.CreadoPorNavigation)
                     .WithMany(p => p.Admision)
@@ -1018,6 +1026,18 @@ namespace ECHO_API.Persistence.Context
                     .HasConstraintName("FK_FacturasEncabezado_ConsultaMedica");
             });
 
+            modelBuilder.Entity<FuncionPersonalInternamiento>(entity =>
+            {
+                entity.HasKey(e => e.IdFuncionMedico);
+
+                entity.Property(e => e.IdFuncionMedico).HasColumnName("idFuncionMedico");
+
+                entity.Property(e => e.DescripcionFuncion)
+                    .HasColumnName("descripcionFuncion")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<HistoriaClinica>(entity =>
             {
                 entity.HasKey(e => e.IdIhistoriaClinica);
@@ -1194,20 +1214,10 @@ namespace ECHO_API.Persistence.Context
                     .HasForeignKey(d => d.CreadoPor)
                     .HasConstraintName("FK_Internamientos_Usuarios");
 
-                entity.HasOne(d => d.MedicoEncargadoNavigation)
-                    .WithMany(p => p.Internamientos)
-                    .HasForeignKey(d => d.MedicoEncargado)
-                    .HasConstraintName("FK_Internamientos_Medicos");
-
                 entity.HasOne(d => d.PacienteInternamientoNavigation)
                     .WithMany(p => p.Internamientos)
                     .HasForeignKey(d => d.PacienteInternamiento)
                     .HasConstraintName("FK_Internamientos_Pacientes");
-
-                entity.HasOne(d => d.PersonalMedicoNavigation)
-                    .WithMany(p => p.Internamientos)
-                    .HasForeignKey(d => d.PersonalMedico)
-                    .HasConstraintName("FK_Internamientos_PersonalInternamiento");
             });
 
             modelBuilder.Entity<MedicoEspecialidad>(entity =>
@@ -1716,6 +1726,21 @@ namespace ECHO_API.Persistence.Context
                 entity.HasKey(e => e.IdPersonalMedico);
 
                 entity.Property(e => e.IdPersonalMedico).HasColumnName("idPersonalMedico");
+
+                entity.HasOne(d => d.IdFuncionNavigation)
+                    .WithMany(p => p.PersonalInternamiento)
+                    .HasForeignKey(d => d.IdFuncion)
+                    .HasConstraintName("FK_PersonalInternamiento_FuncionPersonalInternamiento");
+
+                entity.HasOne(d => d.IdMedicoNavigation)
+                    .WithMany(p => p.PersonalInternamiento)
+                    .HasForeignKey(d => d.IdMedico)
+                    .HasConstraintName("FK_PersonalInternamiento_Medicos");
+
+                entity.HasOne(d => d.InternamientoNavigation)
+                    .WithMany(p => p.PersonalInternamiento)
+                    .HasForeignKey(d => d.Internamiento)
+                    .HasConstraintName("FK_PersonalInternamiento_Internamientos");
             });
 
             modelBuilder.Entity<PlanCitas>(entity =>

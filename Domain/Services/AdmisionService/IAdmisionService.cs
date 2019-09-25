@@ -10,12 +10,10 @@ namespace ECHO_API.Domain.Services.AdmisionService
     public interface IAdmisionService
     {
         Task<IEnumerable<Admision>> ListAsync();
-        //Task AddAsync(Pacientes pacientes);
-
-        Task<Admision> FindByIdAsync(int id);
-
+        Task<Admision> FindByIdAsync(int? id);
+        Task<AdmisionResponse> SaveAsync(Admision admision);
         Task<AdmisionResponse> UpdateAsync(Admision admision);
 
-        //Task>AdmisionResponse> RemoveAsync(Admision admision);
+        //Task>AdmisionResponse> RemoveAsync(Admision admision); // i´m not develop for cowards... just for brave people 
     }
 }

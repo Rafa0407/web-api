@@ -9,9 +9,9 @@ namespace ECHO_API.Domain.Models
         {
             AccesosAgenda = new HashSet<AccesosAgenda>();
             AgendaMedicos = new HashSet<AgendaMedicos>();
-            Internamientos = new HashSet<Internamientos>();
             MedicoEspecialidad = new HashSet<MedicoEspecialidad>();
             PerfilDetalleAccesoAgenda = new HashSet<PerfilDetalleAccesoAgenda>();
+            PersonalInternamiento = new HashSet<PersonalInternamiento>();
         }
 
         public short IdMedico { get; set; }
@@ -49,8 +49,8 @@ namespace ECHO_API.Domain.Models
         public virtual EntidadJuridica EntidadNavigation { get; set; }
         public virtual ICollection<AccesosAgenda> AccesosAgenda { get; set; }
         public virtual ICollection<AgendaMedicos> AgendaMedicos { get; set; }
-        public virtual ICollection<Internamientos> Internamientos { get; set; }
         public virtual ICollection<MedicoEspecialidad> MedicoEspecialidad { get; set; }
         public virtual ICollection<PerfilDetalleAccesoAgenda> PerfilDetalleAccesoAgenda { get; set; }
+        public virtual ICollection<PersonalInternamiento> PersonalInternamiento { get; set; }
     }
 }

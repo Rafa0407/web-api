@@ -18,19 +18,25 @@ namespace ECHO_API.Persistence.Repositories.InternamientosRepository
         public async Task<IEnumerable<Internamientos>> ListAsync()
         {
             return await _context.Internamientos .Where(p =>  p.EstadoInternamiento == true) // solo los internamientos activos
-                                                 .Include(i => i.CreadoPorNavigation)
-                                                 .Include(i => i.MedicoEncargadoNavigation)
-                                                 .Include(i => i.PacienteInternamientoNavigation)
+                                                  .Include(inter => inter.CreadoPorNavigation)
+                                                  .Include(inter => inter.PacienteInternamientoNavigation)
+                                                  .Include(inter => inter.PersonalInternamiento)
+                                                  .ThenInclude(f => f.IdFuncionNavigation)
+                                                  .Include(inter => inter.PersonalInternamiento)
+                                                  .ThenInclude(m => m.IdMedicoNavigation)
                                                  .ToListAsync();
         }
 
         public async Task<Internamientos> FindByIdAsync(int id)
         {
 
-            return await _context.Internamientos.Where(p => p.IdInternamiento == id && p.EstadoInternamiento == true)
-                                                .Include(i => i.CreadoPorNavigation)
-                                                .Include(i => i.MedicoEncargadoNavigation)
-                                                .Include(i => i.PacienteInternamientoNavigation)
+            return await _context.Internamientos.Where(inter => inter.IdInternamiento == id && inter.EstadoInternamiento == true)
+                                                  .Include(inter => inter.CreadoPorNavigation)
+                                                  .Include(inter => inter.PacienteInternamientoNavigation)
+                                                  .Include(inter => inter.PersonalInternamiento)
+                                                  .ThenInclude(f => f.IdFuncionNavigation)
+                                                  .Include(inter => inter.PersonalInternamiento)
+                                                  .ThenInclude(m => m.IdMedicoNavigation)
                                                 .FirstOrDefaultAsync(); 
         }
 

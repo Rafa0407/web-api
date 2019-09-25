@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECHO_API.Domain.Models;
+using ECHO_API.Resources.AdmisionResource;
 using ECHO_API.Resources.InternamientosResource;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace ECHO_API.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveInternamientosResource, Internamientos>();
+            CreateMap<SaveAdmisionResource, Admision>();
+            CreateMap<UpdateAdmisionResource, Admision>();
         }
     }
 }

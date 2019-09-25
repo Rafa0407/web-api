@@ -4,12 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ECHO_API.Domain.Repositories;
+using ECHO_API.Domain.Repositories.AdmisionRepository;
 using ECHO_API.Domain.Repositories.InternamientosRepository;
 using ECHO_API.Domain.Repositories.PacientesRepository;
+using ECHO_API.Domain.Services.AdmisionService;
 using ECHO_API.Domain.Services.InternamientosService;
 using ECHO_API.Domain.Services.PacientesService;
 using ECHO_API.Persistence.Context;
 using ECHO_API.Persistence.Repositories;
+using ECHO_API.Persistence.Repositories.AdmisionRepository;
 using ECHO_API.Persistence.Repositories.InternamientosRepository;
 using ECHO_API.Persistence.Repositories.PacientesRepository;
 using ECHO_API.Services;
@@ -52,8 +55,9 @@ namespace ECHO_API
 
             services.AddScoped<IInternamientosRepository, InternamientosRepository>();
             services.AddScoped<IInternamientosService, InternamientosService>();
-            
 
+            services.AddScoped<IAdmisionRepository, AdmisionRepository>();
+            services.AddScoped<IAdmisionService, AdmisionService>();
             
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();

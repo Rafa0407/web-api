@@ -10,9 +10,9 @@ namespace ECHO_API.Domain.Repositories.AdmisionRepository
     {
         Task<IEnumerable<Admision>> ListAsync();
 
-        //Task AddAsync(Pacientes pacientes);
+        Task AddAsync(Admision admision);
 
-        Task<Admision> FindByIdAsync(int id);
+        Task<Admision> FindByIdAsync(int? id);
 
         void Update(Admision admision);
 

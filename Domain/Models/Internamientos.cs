@@ -13,6 +13,7 @@ namespace ECHO_API.Domain.Models
             HistoriaClinica = new HashSet<HistoriaClinica>();
             NotaOperatoria = new HashSet<NotaOperatoria>();
             NotasEnfermeria = new HashSet<NotasEnfermeria>();
+            PersonalInternamiento = new HashSet<PersonalInternamiento>();
             PlanesEvolucion = new HashSet<PlanesEvolucion>();
         }
 
@@ -20,20 +21,17 @@ namespace ECHO_API.Domain.Models
         public DateTime FechaCreacion { get; set; }
         public bool? EstadoInternamiento { get; set; }
         public int? CreadoPor { get; set; }
-        public short? MedicoEncargado { get; set; }
         public int? PacienteInternamiento { get; set; }
-        public int? PersonalMedico { get; set; }
 
-        public  Usuarios CreadoPorNavigation { get; set; }
-        public  Medicos MedicoEncargadoNavigation { get; set; }
-        public  Pacientes PacienteInternamientoNavigation { get; set; }
-        public  PersonalInternamiento PersonalMedicoNavigation { get; set; }
-        public  ICollection<Admision> Admision { get; set; }
-        public  ICollection<ControlSignos> ControlSignos { get; set; }
-        public  ICollection<CosentimientoInformado> CosentimientoInformado { get; set; }
-        public  ICollection<HistoriaClinica> HistoriaClinica { get; set; }
-        public  ICollection<NotaOperatoria> NotaOperatoria { get; set; }
-        public  ICollection<NotasEnfermeria> NotasEnfermeria { get; set; }
-        public  ICollection<PlanesEvolucion> PlanesEvolucion { get; set; }
+        public virtual Usuarios CreadoPorNavigation { get; set; }
+        public virtual Pacientes PacienteInternamientoNavigation { get; set; }
+        public virtual ICollection<Admision> Admision { get; set; }
+        public virtual ICollection<ControlSignos> ControlSignos { get; set; }
+        public virtual ICollection<CosentimientoInformado> CosentimientoInformado { get; set; }
+        public virtual ICollection<HistoriaClinica> HistoriaClinica { get; set; }
+        public virtual ICollection<NotaOperatoria> NotaOperatoria { get; set; }
+        public virtual ICollection<NotasEnfermeria> NotasEnfermeria { get; set; }
+        public virtual ICollection<PersonalInternamiento> PersonalInternamiento { get; set; }
+        public virtual ICollection<PlanesEvolucion> PlanesEvolucion { get; set; }
     }
 }
