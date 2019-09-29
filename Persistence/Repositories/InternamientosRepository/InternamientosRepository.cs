@@ -24,37 +24,39 @@ namespace ECHO_API.Persistence.Repositories.InternamientosRepository
                                                   .ThenInclude(f => f.IdFuncionNavigation)
                                                   .Include(inter => inter.PersonalInternamiento)
                                                   .ThenInclude(m => m.IdMedicoNavigation)
+                                                  .Include(inter => inter.Admision)
+                                                  .ThenInclude(ac => ac.AcompannantePaciente) 
                                                  .ToListAsync();
         }
 
         public async Task<Internamientos> FindByIdAsync(int id)
         {
-
             return await _context.Internamientos.Where(inter => inter.IdInternamiento == id && inter.EstadoInternamiento == true)
+                                                  .Include(inter => inter.Admision)
                                                   .Include(inter => inter.CreadoPorNavigation)
                                                   .Include(inter => inter.PacienteInternamientoNavigation)
                                                   .Include(inter => inter.PersonalInternamiento)
                                                   .ThenInclude(f => f.IdFuncionNavigation)
                                                   .Include(inter => inter.PersonalInternamiento)
                                                   .ThenInclude(m => m.IdMedicoNavigation)
+                                                  .Include(inter => inter.Admision)
+                                                  .ThenInclude(ac => ac.AcompannantePaciente)
                                                 .FirstOrDefaultAsync(); 
         }
 
-        /*public async Task AddAsync(Pacientes pacientes)
+        /*public async Task AddAsync(Internamientos internamientos)
         {
-            await _context.Pacientes.AddAsync(pacientes);
+            await _context.Internamientos.AddAsync(internamientos);
         }
         */
-  
-
         public void Update(Internamientos internamientos)
         {
             _context.Internamientos.Update(internamientos);
         }
 
-        /*public void Remove(Pacientes pacientes)
+        /*public void Remove(Internamientos internamientos)
         {
-            _context.Pacientes.Remove(pacientes);
+            _context.Internamientos.Remove(internamientos);
         }*/
     }
 }

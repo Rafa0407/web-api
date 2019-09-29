@@ -24,18 +24,18 @@ namespace ECHO_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<AdmisionResource>> GetAllAsync()
+        public async Task<IEnumerable<AdmisnResource>> GetAllAsync()
         {
             var admisiones = await _admisionService.ListAsync();
-            var admresource = _mapper.Map<IEnumerable<Admision>, IEnumerable<AdmisionResource>>(admisiones);
+            var admresource = _mapper.Map<IEnumerable<Admision>, IEnumerable<AdmisnResource>>(admisiones);
             return admresource;
         }
 
         [HttpGet("{id}")]
-        public async Task<AdmisionResource> GetGetByIdAsync(int id)
+        public async Task<AdmisnResource> GetGetByIdAsync(int id)
         {
             var admision = await _admisionService.FindByIdAsync(id);
-            var admresource = _mapper.Map<Admision, AdmisionResource>(admision);
+            var admresource = _mapper.Map<Admision, AdmisnResource>(admision);
             return admresource;
         }
 
@@ -51,7 +51,7 @@ namespace ECHO_API.Controllers
             if (!admresult.Success)
                 return BadRequest(new { message = admresult.Message });
 
-            var admiResource = _mapper.Map<Admision, AdmisionResource>(admresult.Admision);
+            var admiResource = _mapper.Map<Admision, AdmisnResource>(admresult.Admision);
             return Ok(admiResource);
         }
 
@@ -66,9 +66,11 @@ namespace ECHO_API.Controllers
             if (!admiResult.Success)
                 return BadRequest(admiResult.Message);
 
-            var admisionResource = _mapper.Map<Admision, AdmisionResource>(admiResult.Admision);
+            var admisionResource = _mapper.Map<Admision, AdmisnResource>(admiResult.Admision);
             return Ok(admisionResource);
         }
+
+        // no se permite eliminar las admisiones..... 
 
     }
 }

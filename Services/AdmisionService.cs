@@ -6,7 +6,6 @@ using ECHO_API.Domain.Services.Communication.AdmisionResponse;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ECHO_API.Services
@@ -46,9 +45,9 @@ namespace ECHO_API.Services
                 return new AdmisionResponse(admision);
 
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                return new AdmisionResponse($"An error occurred when saving the category: {ex.Message}");
+                return new AdmisionResponse($"Ha ocurrido un error mientras se guardaba la admision: {ex.Errors.ToString()}");
             }
         }
 

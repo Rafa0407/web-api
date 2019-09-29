@@ -10,7 +10,7 @@ namespace ECHO_API.Domain.Models
             AcompannantePaciente = new HashSet<AcompannantePaciente>();
         }
 
-        public int IdAdmision { get; set; }
+        public int IdIadmision { get; set; }
         public int? CreadoPor { get; set; }
         public int? Internamiento { get; set; }
         public DateTime? FechaAdmision { get; set; }

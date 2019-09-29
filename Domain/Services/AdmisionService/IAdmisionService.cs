@@ -14,6 +14,6 @@ namespace ECHO_API.Domain.Services.AdmisionService
         Task<AdmisionResponse> SaveAsync(Admision admision);
         Task<AdmisionResponse> UpdateAsync(Admision admision);
 
-        //Task>AdmisionResponse> RemoveAsync(Admision admision); // i´m not develop for cowards... just for brave people 
+        //Task>AdmisionResponse> RemoveAsync(Admision admision); // i do not develop for cowards... just for brave people 
     }
 }

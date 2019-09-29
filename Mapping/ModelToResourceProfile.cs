@@ -2,6 +2,10 @@
 using ECHO_API.Domain.Models;
 using ECHO_API.Resources.AdmisionResource;
 using ECHO_API.Resources.FuncionPersonalIntr;
+using ECHO_API.Resources.HistoriaClinicaResources;
+using ECHO_API.Resources.HistoriaClinicaResources.AlergiasResource;
+using ECHO_API.Resources.HistoriaClinicaResources.ExamenesFisicoResource;
+using ECHO_API.Resources.HistoriaClinicaResources.TiposAlergiasResources;
 using ECHO_API.Resources.InternamientosResource;
 using ECHO_API.Resources.MedicosResource;
 using ECHO_API.Resources.PacientesResource;
@@ -25,9 +29,15 @@ namespace ECHO_API.Mapping
             CreateMap<Internamientos, InternamientoResource>();
             CreateMap<Usuarios, UsuarioResource>();
             CreateMap<Medicos, MedicoResource>();
-            CreateMap<Admision, AdmisionResource>();
+            CreateMap<Admision, AdmisnResource>();
             CreateMap<PersonalInternamiento, PersonalIntrResource>();
             CreateMap<FuncionPersonalInternamiento, FunPersInterResource>();
+            CreateMap<AcompannantePaciente, AcompannanteResource>();
+            CreateMap<HistoriaClinica, HistoriaClinicaResource>();
+            CreateMap<Alergias, AlergiaResource>();
+            CreateMap<TipoAlergias, TipoAlergiasResource>();
+            CreateMap<ExamenFisico, ExamenFisicoResource>();
+
         }
     }
 }

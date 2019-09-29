@@ -1,4 +1,5 @@
 ﻿using ECHO_API.Domain.Models;
+using ECHO_API.Resources.AdmisionResource;
 using ECHO_API.Resources.MedicosResource;
 using ECHO_API.Resources.PacientesResource;
 using ECHO_API.Resources.PersonalInternamientoResource;
@@ -18,7 +19,7 @@ namespace ECHO_API.Resources.InternamientosResource
 
         public virtual UsuarioResource CreadoPorNavigation { get; set; }
         public virtual PacientesResources PacienteInternamientoNavigation { get; set; }
-        public virtual ICollection<Admision> Admision { get; set; }
+        public virtual ICollection<AdmisnResource> Admision { get; set; }
         public virtual ICollection<ControlSignos> ControlSignos { get; set; }
         public virtual ICollection<CosentimientoInformado> CosentimientoInformado { get; set; }
         public virtual ICollection<HistoriaClinica> HistoriaClinica { get; set; }

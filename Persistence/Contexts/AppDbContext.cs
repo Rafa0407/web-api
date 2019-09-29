@@ -20,6 +20,10 @@ namespace ECHO_API.Persistence.Context
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        public DbSet<CostarricensesBusqueda> CostarricensesBusqueda { get; set; }
+        // Just created for search people (just ticos)
+
         public virtual DbSet<AccesosAgenda> AccesosAgenda { get; set; }
         public virtual DbSet<AcompannantePaciente> AcompannantePaciente { get; set; }
         public virtual DbSet<Admision> Admision { get; set; }
@@ -75,46 +79,53 @@ namespace ECHO_API.Persistence.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+            modelBuilder.Entity<CostarricensesBusqueda>(entity =>
+            {
+                entity.HasKey(e => e.CedulaIdentidad);
+
+                entity.Property(e => e.NombreCompleto1)
+                .HasColumnName("NombreCompleto1");
+
+
+                entity.Property(e => e.NombreCompleto2)
+                            .HasColumnName("NombreCompleto2");
+
+                entity.Property(e => e.CedulaIdentidad)
+                            .HasColumnName("CedulaIdentidad");
+            });
 
             modelBuilder.Entity<AccesosAgenda>(entity =>
             {
-                entity.HasKey(e => e.IdAcceso);
+            entity.HasKey(e => e.IdAcceso);
 
-                entity.HasOne(d => d.IdMedicoNavigation)
-                    .WithMany(p => p.AccesosAgenda)
-                    .HasForeignKey(d => d.IdMedico)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AccesosAgenda_Medicos");
+            entity.HasOne(d => d.IdMedicoNavigation)
+                .WithMany(p => p.AccesosAgenda)
+                .HasForeignKey(d => d.IdMedico)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AccesosAgenda_Medicos");
             });
 
             modelBuilder.Entity<AcompannantePaciente>(entity =>
             {
                 entity.HasKey(e => e.IdAcompannante);
 
-                entity.Property(e => e.IdAcompannante)
-                    .HasColumnName("idAcompannante")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Apellido1)
-                    .HasColumnName("apellido1")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Apellido2)
-                    .HasColumnName("apellido2")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.IdAcompannante).HasColumnName("idAcompannante");
 
                 entity.Property(e => e.IdAdmision).HasColumnName("idAdmision");
 
+                entity.Property(e => e.Identificacion)
+                    .HasColumnName("identificacion")
+                    .HasMaxLength(12)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.NombreAcompañante)
                     .HasColumnName("nombreAcompañante")
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Telefono)
                     .HasColumnName("telefono")
-                    .HasMaxLength(50)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdAdmisionNavigation)
@@ -125,9 +136,9 @@ namespace ECHO_API.Persistence.Context
 
             modelBuilder.Entity<Admision>(entity =>
             {
-                entity.HasKey(e => e.IdAdmision);
+                entity.HasKey(e => e.IdIadmision);
 
-                entity.Property(e => e.IdAdmision).HasColumnName("idIAdmision");
+                entity.Property(e => e.IdIadmision).HasColumnName("idIAdmision");
 
                 entity.Property(e => e.CreadoPor).HasColumnName("creadoPor");
 

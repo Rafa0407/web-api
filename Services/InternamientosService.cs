@@ -54,7 +54,7 @@ namespace ECHO_API.Services
             }
             catch (Exception ex)
             {
-                return new InternamientosResponse($"An error ocurred: {ex.Message}");
+                return new InternamientosResponse($"Ha ocurrido un error mientras se actualizaban los datos: {ex.Message}");
             }
 
         }
